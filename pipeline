@@ -22,7 +22,7 @@ pipeline {
                 echo "Guardando...."
                 sh '''
                 echo "nuevo texto" > nuevo.txt
-                cat nue.txt
+                cat nuevo.txt
 
                 '''
             }
