@@ -1,0 +1,39 @@
+pipeline {
+    agent { 
+        node {
+            label 'Ubuntu20'
+            }
+      }
+    triggers {
+        pollSCM '*/2 * * * *'
+    }
+    stages {
+        stage('Creando') {
+            steps {
+                echo "Creando.."
+                sh '''
+                touch nuevo.txt
+
+                '''
+            }
+        }
+        stage('Guardando') {
+            steps {
+                echo "Guardando...."
+                sh '''
+                echo "nuevo texto" > nuevo.txt
+                cat nuevo.txt
+
+                '''
+            }
+        }
+        stage('Desde python') {
+            steps {
+                echo 'Deliver....'
+                sh '''
+                python3 hello.py
+                '''
+            }
+        }
+    }
+}
