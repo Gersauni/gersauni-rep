@@ -2,14 +2,14 @@ import os
 
 
 class Config:
-    # Secret key for the Flask app
+    # Clave secreta para la aplicación Flask
     SECRET_KEY = os.environ.get("SECRET_KEY", "your_secret_key")
 
-    # Database configuration
-    SQLALCHEMY_DATABASE_URI = "postgresql://kratos:admin@127.0.0.1:5432/testing"
+    # Configuración de la base de datos
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:Test1234@database-1.c7868640g6yp.us-east-1.rds.amazonaws.com:5432/testing"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # Add other configuration variables as needed
+    # Agrega otras variables de configuración según sea necesario
 
 
 class DevelopmentConfig(Config):
@@ -18,12 +18,13 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    # Add other production configurations here
+    # Agrega otras configuraciones de producción aquí
 
 
-# Dictionary to map environment names to configuration classes
+# Diccionario para mapear nombres de entorno a clases de configuración
 config_dict = {
     "development": DevelopmentConfig,
     "production": ProductionConfig,
-    # Add other environments if needed
+    # Agrega otros entornos si es necesario
 }
+

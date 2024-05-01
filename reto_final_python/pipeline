@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Paso para obtener el código fuente del repositorio Git
+                git 'https://github.com/Gersauni/gersauni-rep'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Pasos para compilar el proyecto (pueden variar dependiendo del proyecto)
+                // Ejemplo para un proyecto Maven
+                sh 'mvn clean package'
+            }
+        }
+        
+        stage('Unit Tests') {
+            steps {
+                // Pasos para ejecutar las pruebas unitarias (pueden variar dependiendo del proyecto)
+                // Ejemplo para un proyecto Maven
+                sh 'mvn test'
+            }
+        }
+        
+        stage('Linting') {
+            steps {
+                // Pasos para ejecutar herramientas de análisis estático de código (pueden variar dependiendo del proyecto)
+                // Ejemplo para un proyecto JavaScript con ESLint
+                sh 'eslint .'
+            }
+        }
+        
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker build -t my-image .'
+                sh 'docker push my-image'
+            }
+        }
+    }
+}

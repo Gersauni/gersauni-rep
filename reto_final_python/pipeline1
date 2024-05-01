@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Clonar código fuente') {
+            steps {
+                git 'https://github.com/usuario/repositorio.git'
+            }
+        }
+        
+        stage('Ejecutar pruebas') {
+            steps {
+                sh 'python3 tests.py'
+            }
+        }
+        
+        stage('Lintado') {
+            steps {
+                sh 'flake8 .'
+            }
+        }
+        
+        stage('Crear imagen Docker') {
+            steps {
+                sh 'docker build -t miimagen .'
+            }
+        }
+        
+        stage('Subir imagen Docker') {
+            when {
+                anyOf {
+                    branch 'develop'
+                    branch 'master'
+                    branch 'main'
+                }
+            }
+            steps {
+                withDockerRegistry(credentialsId: 'mi-credencial', url: 'https://mi-repositorio-docker/') {
+                    sh 'docker push miimagen'
+                }
+            }
+        }
+    }
+}
